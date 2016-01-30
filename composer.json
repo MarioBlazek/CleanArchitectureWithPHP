@@ -3,6 +3,9 @@
         "psr-4": {
             "CleanPhp\\Invoicer\\": ["src/"]
         }
+    },
+    "require-dev": {
+        "peridot-php/peridot": "^1.16",
+        "peridot-php/leo": "^1.4"
     }
 }
-
