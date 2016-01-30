@@ -23,7 +23,7 @@ abstract class AbstractEntity
 
     /**
      * @param int $id
-     * 
+     *
      * @return $this
      */
     public function setId($id)
