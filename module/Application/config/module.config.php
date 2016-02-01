@@ -20,6 +20,36 @@ return array(
                     ),
                 ),
             ),
+            'customers' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/customers',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Customers',
+                        'action'    => 'index',
+                    ),
+                ),
+            ),
+            'orders' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/orders',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Orders',
+                        'action'    => 'index',
+                    ),
+                ),
+            ),
+            'invoices' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/invoices',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Invoices',
+                        'action'    => 'index',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
