@@ -103,7 +103,14 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+            'Application\Controller\Index' => 'Application\Controller\IndexController',
+        ),
+        'factories' => array(
+            'Application\Controller\Customers' => function($sm) {
+                return new \Application\Controller\CustomersController(
+                    $sm->getServiceLocator()->get('CustomerTable')
+                );
+            },
         ),
     ),
     'view_manager' => array(
