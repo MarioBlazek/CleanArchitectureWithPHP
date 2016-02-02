@@ -154,6 +154,11 @@ return array(
                     new \Zend\Stdlib\Hydrator\ClassMethods()
                 );
             },
+            'Application\Controller\Orders' => function($sm) {
+                return new \Application\Controller\OrdersController(
+                    $sm->getServiceLocator()->get('OrderTable')
+                );
+            },
         ),
     ),
 //    'view_helpers' => array(
