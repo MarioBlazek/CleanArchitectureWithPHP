@@ -8,6 +8,11 @@
  */
 
 return array(
+    'view_helpers' => array(
+        'invokables' => array(
+            'validationErrors' => 'Application\View\Helper\ValidationErrors',
+        ),
+    ),
     'router' => array(
         'routes' => array(
             'home' => array(
@@ -31,15 +36,39 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'create' => array(
+                    'new' => array(
                         'type' => 'Segment',
                         'options' => array(
                             'route' => '/new',
+                            'constraints' => array(
+                                'id' => '[0-9]+',
+                            ),
                             'defaults' => array(
-                                'action' => 'new',
+                                'action' => 'new-or-edit',
                             ),
                         ),
                     ),
+                    'edit' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/edit/:id',
+                            'constraints' => array(
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'new-or-edit',
+                            ),
+                        ),
+                    ),
+//                    'create' => array(
+//                        'type' => 'Segment',
+//                        'options' => array(
+//                            'route' => '/new',
+//                            'defaults' => array(
+//                                'action' => 'new',
+//                            ),
+//                        ),
+//                    ),
                 ),
             ),
             'orders' => array(
@@ -120,11 +149,18 @@ return array(
         'factories' => array(
             'Application\Controller\Customers' => function($sm) {
                 return new \Application\Controller\CustomersController(
-                    $sm->getServiceLocator()->get('CustomerTable')
+                    $sm->getServiceLocator()->get('CustomerTable'),
+                    new \CleanPhp\Invoicer\Service\InputFilter\CustomerInputFilter(),
+                    new \Zend\Stdlib\Hydrator\ClassMethods()
                 );
             },
         ),
     ),
+//    'view_helpers' => array(
+//        'invokables' => array(
+//            'validationErrors' => 'Application\View\Helper\ValidationErrors',
+//        ),
+//    ),
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
