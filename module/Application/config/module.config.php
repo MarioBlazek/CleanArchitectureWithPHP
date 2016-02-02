@@ -74,7 +74,7 @@ return array(
             'orders' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/orders',
+                    'route' => '/orders[/:action/:id]',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Orders',
                         'action'    => 'index',
@@ -156,7 +156,10 @@ return array(
             },
             'Application\Controller\Orders' => function($sm) {
                 return new \Application\Controller\OrdersController(
-                    $sm->getServiceLocator()->get('OrderTable')
+                    $sm->getServiceLocator()->get('OrderTable'),
+                    $sm->getServiceLocator()->get('CustomerTable'),
+                    new \CleanPhp\Invoicer\Service\InputFilter\OrderInputFilter(),
+                    $sm->getServiceLocator()->get('OrderHydrator')
                 );
             },
         ),

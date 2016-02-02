@@ -14,6 +14,7 @@
         "peridot-php/peridot-prophecy-plugin": "^1.1"
     },
     "require": {
-        "zendframework/zendframework": "^2.5"
+        "zendframework/zendframework": "^2.5",
+        "vnn/keyper": "^1.3"
     }
 }

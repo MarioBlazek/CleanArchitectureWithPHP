@@ -2,10 +2,19 @@
 
 namespace Application\View\Helper;
 
+use Vnn\Keyper\Keyper;
 use Zend\View\Helper\AbstractHelper;
 
+/**
+ * Class ValidationErrors
+ * @package Application\View\Helper
+ */
 class ValidationErrors extends AbstractHelper
 {
+    /**
+     * @param $element
+     * @return string
+     */
     public function __invoke($element)
     {
         if ($errors = $this->getErrors($element)) {
@@ -17,18 +26,18 @@ class ValidationErrors extends AbstractHelper
         return '';
     }
 
+    /**
+     * @param $element
+     * @return bool
+     */
     protected function getErrors($element)
     {
         if (!isset($this->getView()->errors)) {
             return false;
         }
 
-        $errors = $this->getView()->errors;
+        $errors = Keyper::create($this->getView()->errors);
 
-        if (isset($errors[$element])) {
-            return $errors[$element];
-        }
-
-        return false;
+        return $errors->get($element) ?: false;
     }
 }
