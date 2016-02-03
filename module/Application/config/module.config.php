@@ -74,7 +74,7 @@ return array(
             'orders' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/orders[/:action/:id]',
+                    'route' => '/orders[/:action[/:id]]',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Orders',
                         'action'    => 'index',
