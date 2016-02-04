@@ -162,6 +162,11 @@ return array(
                     $sm->getServiceLocator()->get('OrderHydrator')
                 );
             },
+            'Application\Controller\InvoicesController' => function($sm) {
+                return new \Application\Controller\InvoicesController(
+                    $sm->getServiceLocator()->get('InvoiceTable')
+                );
+            },
         ),
     ),
 //    'view_helpers' => array(
