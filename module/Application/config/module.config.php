@@ -84,7 +84,7 @@ return array(
             'invoices' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/invoices',
+                    'route' => '/invoices[/:action[/:id]]',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Invoices',
                         'action'    => 'index',
@@ -164,7 +164,12 @@ return array(
             },
             'Application\Controller\InvoicesController' => function($sm) {
                 return new \Application\Controller\InvoicesController(
-                    $sm->getServiceLocator()->get('InvoiceTable')
+                    $sm->getServiceLocator()->get('InvoiceTable'),
+                    $sm->getServiceLocator()->get('OrderTable'),
+                    new \CleanPhp\Invoicer\Domain\Service\InvoicingService(
+                        $sm->getServiceLocatot()->get('OrderTable'),
+                        new \CleanPhp\Invoicer\Domain\Factory\InvoiceFactory()
+                    )
                 );
             },
         ),
