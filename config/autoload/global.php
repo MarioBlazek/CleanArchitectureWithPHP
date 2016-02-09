@@ -29,57 +29,16 @@ return array(
             'OrderHydrator' => function($sm) {
                 return new OrderHydrator(
                     new ClassMethods(),
-                    $sm->get('CustomerTable')
+                    $sm->get('CustomerRepository')
                 );
             },
-            'InvoiceHydrator' => function($sm) {
-                return new InvoiceHydrator(
-                    new ClassMethods(),
-                    $sm->get('OrderTable')
-                );
-            },
-            'CustomerTable' => function($sm) {
-                $factory = new TableGatewayFactory();
-                $hydrator = new ClassMethods();
+            'CustomerRepository' =>
+                'CleanPhp\Invoicer\Persistence\Doctrine\Repository\RepositoryFactory',
+            'InvoiceRepository' =>
+                'CleanPhp\Invoicer\Persistence\Doctrine\Repository\RepositoryFactory',
+            'OrderRepository' =>
+                'CleanPhp\Invoicer\Persistence\Doctrine\Repository\RepositoryFactory',
 
-                return new CustomerTable(
-                    $factory->createGateway(
-                        $sm->get('Zend\Db\Adapter\Adapter'),
-                        $hydrator,
-                        new Customer(),
-                        'customers'
-                    ),
-                    $hydrator
-                );
-            },
-            'OrderTable' => function($sm) {
-                $factory = new TableGatewayFactory();
-                $hydrator = $sm->get('OrderHydrator');
-
-                return new OrderTable(
-                    $factory->createGateway(
-                        $sm->get('Zend\Db\Adapter\Adapter'),
-                        $hydrator,
-                        new Order(),
-                        'orders'
-                    ),
-                    $hydrator
-                );
-            },
-            'InvoiceTable' => function($sm) {
-                $factory = new TableGatewayFactory();
-                $hydrator = $sm->get('InvoiceHydrator');
-
-                return new InvoiceTable(
-                    $factory->createGateway(
-                        $sm->get('Zend\Db\Adapter\Adapter'),
-                        $hydrator,
-                        new Invoice(),
-                        'invoices'
-                    ),
-                    $hydrator
-                );
-            },
         ),
     ),
 );

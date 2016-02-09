@@ -149,25 +149,25 @@ return array(
         'factories' => array(
             'Application\Controller\Customers' => function($sm) {
                 return new \Application\Controller\CustomersController(
-                    $sm->getServiceLocator()->get('CustomerTable'),
+                    $sm->getServiceLocator()->get('CustomerRepository'),
                     new \CleanPhp\Invoicer\Service\InputFilter\CustomerInputFilter(),
                     new \Zend\Stdlib\Hydrator\ClassMethods()
                 );
             },
             'Application\Controller\Orders' => function($sm) {
                 return new \Application\Controller\OrdersController(
-                    $sm->getServiceLocator()->get('OrderTable'),
-                    $sm->getServiceLocator()->get('CustomerTable'),
+                    $sm->getServiceLocator()->get('OrderRepository'),
+                    $sm->getServiceLocator()->get('CustomerRepository'),
                     new \CleanPhp\Invoicer\Service\InputFilter\OrderInputFilter(),
                     $sm->getServiceLocator()->get('OrderHydrator')
                 );
             },
             'Application\Controller\InvoicesController' => function($sm) {
                 return new \Application\Controller\InvoicesController(
-                    $sm->getServiceLocator()->get('InvoiceTable'),
-                    $sm->getServiceLocator()->get('OrderTable'),
+                    $sm->getServiceLocator()->get('InvoiceRepository'),
+                    $sm->getServiceLocator()->get('OrderRepository'),
                     new \CleanPhp\Invoicer\Domain\Service\InvoicingService(
-                        $sm->getServiceLocatot()->get('OrderTable'),
+                        $sm->getServiceLocatot()->get('OrderRepository'),
                         new \CleanPhp\Invoicer\Domain\Factory\InvoiceFactory()
                     )
                 );
