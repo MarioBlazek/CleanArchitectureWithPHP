@@ -60,25 +60,11 @@ class OrderHydrator implements HydratorInterface
 
         $this->hydrator->hydrate($data, $object);
 
-        if (isset($data['customer'])) {
-            $customer = $this->hydrator->hydrate(
-                $data['customer'],
-                new Customer()
-            );
+        if (isset($data['customer']) && isset($data['customer']['id'])) {
 
-            unset($data['customer']);
+            $data['customer'] = $this->customerRepository->getById($data['customer']['id']);
         }
 
-        if (isset($data['customer_id'])) {
-            $customer = $this->customerRepository->getById($data['customer_id']);
-        }
-
-        $this->hydrator->hydrate($data, $object);
-
-        if ($customer) {
-            $object->setCustomer($customer);
-        }
-
-        return $object;
+        return $this->hydrator->hydrate($data, $object);
     }
 }

@@ -35,21 +35,19 @@ describe('Persistence\Hydrator\OrderHydrator', function() {
             expect($order->getTotal())->to->equal(500);
         });
 
-        it('should hydrate a Customer entity on the Order', function() {
+        it('should hydrate the embedded customer data', function() {
             $data = [
-                'customer_id' => 500,
+                'customer' => ['id' => 20],
             ];
 
-            $customer = (new Customer())->setId(500);
             $order = new Order();
 
-            $this->repository->getById(500)
-                ->shouldBeCalled()
-                ->willReturn($customer);
+            $this->repository->getById(20)
+                ->willReturn((new Customer())->setId(20));
 
             $this->hydrator->hydrate($data, $order);
 
-            expect($order->getCustomer())->to->equal($customer);
+            assert($data['customer']['id'] === $order->getCustomer()->getId(), 'id does not match');
 
             $this->getProphet()->checkPredictions();
         });
